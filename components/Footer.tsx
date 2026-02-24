@@ -94,8 +94,14 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Changed: Added Terms link next to copyright */}
         <div className="mt-12 border-t border-ocean-800 pt-8 text-center text-xs text-ocean-400">
-          © {new Date().getFullYear()} Swell Journal. All rights reserved.
+          <p>© {new Date().getFullYear()} Swell Journal. All rights reserved.</p>
+          <p className="mt-2">
+            <Link href="/terms" className="hover:text-white transition-colors duration-200">
+              Terms & Conditions
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
