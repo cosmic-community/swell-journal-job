@@ -1,13 +1,14 @@
 import { createBucketClient } from '@cosmicjs/sdk'
 import type { Post, Author, Category } from '@/types'
 
-// Changed: Added PageContent interface for the new pages object type
+// Changed: Expanded PageContent interface with seo_description field
 export interface PageContent {
   id: string
   title: string
   slug: string
   metadata: {
     heading: string
+    seo_description?: string
     content: string
     hero_image?: {
       url: string

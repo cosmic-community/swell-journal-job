@@ -1,11 +1,21 @@
 import { getPageBySlug, getAuthors } from '@/lib/cosmic'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
-export const metadata: Metadata = {
-  title: 'About — Swell Journal',
-  description:
-    'Learn more about Swell Journal — who we are, what drives us, and our passion for surf culture.',
+// Changed: Dynamic metadata from Cosmic CMS
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageBySlug('about')
+
+  return {
+    title: page?.metadata?.heading
+      ? `${page.metadata.heading} — Swell Journal`
+      : 'About — Swell Journal',
+    description:
+      page?.metadata?.seo_description ??
+      'Learn more about Swell Journal — who we are, what drives us, and our passion for surf culture.',
+  }
 }
 
 export default async function AboutPage() {
@@ -44,11 +54,13 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* Content Section */}
+      {/* Content Section — Changed: renders Markdown from Cosmic */}
       <section className="mx-auto max-w-3xl px-6 py-20">
         {page?.metadata?.content ? (
-          <div className="prose prose-lg prose-ocean max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
-            {page.metadata.content}
+          <div className="prose prose-lg prose-ocean max-w-none text-gray-700 leading-relaxed">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {page.metadata.content}
+            </ReactMarkdown>
           </div>
         ) : (
           <div className="prose prose-lg prose-ocean max-w-none text-gray-700 leading-relaxed">
