@@ -1,6 +1,21 @@
 import { createBucketClient } from '@cosmicjs/sdk'
 import type { Post, Author, Category } from '@/types'
 
+// Changed: Added PageContent interface for the new pages object type
+export interface PageContent {
+  id: string
+  title: string
+  slug: string
+  metadata: {
+    heading: string
+    content: string
+    hero_image?: {
+      url: string
+      imgix_url: string
+    }
+  }
+}
+
 export const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
   readKey: process.env.COSMIC_READ_KEY as string,
@@ -133,5 +148,21 @@ export async function getPostsByAuthor(authorId: string): Promise<Post[]> {
       return []
     }
     throw new Error('Failed to fetch posts by author')
+  }
+}
+
+// Changed: Added getPageBySlug function to fetch singleton page content from Cosmic
+export async function getPageBySlug(slug: string): Promise<PageContent | null> {
+  try {
+    const response = await cosmic.objects
+      .findOne({ type: 'pages', slug })
+      .props(['id', 'title', 'slug', 'metadata'])
+
+    return response.object as PageContent
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null
+    }
+    throw new Error('Failed to fetch page')
   }
 }

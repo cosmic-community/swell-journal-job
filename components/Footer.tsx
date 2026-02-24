@@ -30,6 +30,12 @@ export default function Footer() {
                   All Posts
                 </Link>
               </li>
+              {/* Changed: Added About link */}
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors duration-200">
+                  About
+                </Link>
+              </li>
               <li>
                 <Link href="/categories/surf-travel" className="hover:text-white transition-colors duration-200">
                   Surf Travel
