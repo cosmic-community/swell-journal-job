@@ -38,3 +38,14 @@ export interface Post {
     category?: Category
   }
 }
+
+// Changed: Added NewsletterSubscriber interface for newsletter subscription feature
+export interface NewsletterSubscriber {
+  id: string
+  title: string
+  slug: string
+  metadata: {
+    name: string
+    email: string
+  }
+}
