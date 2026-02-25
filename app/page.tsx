@@ -1,9 +1,10 @@
 import { getPosts, getCategories, getAuthors } from '@/lib/cosmic'
 import PostCard from '@/components/PostCard'
 import AuthorCard from '@/components/AuthorCard'
+import NewsletterForm from '@/components/NewsletterForm'
 import Link from 'next/link'
 
-// Changed: Added search CTA section to the homepage
+// Changed: Added search CTA section and newsletter subscription to the homepage
 
 export default async function HomePage() {
   const [posts, categories, authors] = await Promise.all([
@@ -77,6 +78,23 @@ export default async function HomePage() {
             No additional posts to show yet. Check back soon!
           </p>
         )}
+      </section>
+
+      {/* Changed: Added Newsletter Subscription section */}
+      <section className="bg-gradient-to-br from-ocean-800 via-ocean-900 to-ocean-950 py-20">
+        <div className="mx-auto max-w-2xl px-6 text-center">
+          <span className="text-4xl mb-4 block">📬</span>
+          <h2 className="text-3xl font-bold text-white mb-3">
+            Stay in the Lineup
+          </h2>
+          <p className="text-ocean-200 mb-8 leading-relaxed">
+            Get the latest surf stories, technique tips, and gear reviews
+            delivered straight to your inbox. Join the Swell Journal community.
+          </p>
+          <div className="mx-auto max-w-xl">
+            <NewsletterForm />
+          </div>
+        </div>
       </section>
 
       {/* Categories */}

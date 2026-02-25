@@ -9,35 +9,53 @@ export interface CosmicObject {
   modified_at: string;
 }
 
-export interface Author extends CosmicObject {
-  type: 'authors';
-  metadata: {
-    name: string;
-    bio?: string;
-    profile_photo?: {
-      url: string;
-      imgix_url: string;
-    };
-  };
+// Changed: Merged CosmicImage from types/index.ts
+export interface CosmicImage {
+  url: string
+  imgix_url: string
 }
 
-export interface Category extends CosmicObject {
-  type: 'categories';
+export interface Author {
+  id: string
+  title: string
+  slug: string
   metadata: {
-    name: string;
-    description?: string;
-  };
+    name: string
+    bio?: string
+    profile_photo?: CosmicImage
+  }
 }
 
-export interface Post extends CosmicObject {
-  type: 'posts';
+export interface Category {
+  id: string
+  title: string
+  slug: string
   metadata: {
-    content: string;
-    featured_image?: {
-      url: string;
-      imgix_url: string;
-    };
-    author?: Author;
-    category?: Category;
-  };
+    name: string
+    description?: string
+  }
+}
+
+export interface Post {
+  id: string
+  title: string
+  slug: string
+  created_at?: string
+  metadata: {
+    content?: string
+    featured_image?: CosmicImage
+    author?: Author
+    category?: Category
+  }
+}
+
+// Changed: Merged NewsletterSubscriber from types/index.ts to resolve TS2305 error
+export interface NewsletterSubscriber {
+  id: string
+  title: string
+  slug: string
+  metadata: {
+    name: string
+    email: string
+  }
 }

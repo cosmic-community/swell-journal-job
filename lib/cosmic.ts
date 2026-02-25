@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
-import type { Post, Author, Category } from '@/types'
+import type { Post, Author, Category, NewsletterSubscriber } from '@/types'
 
 // Changed: Expanded PageContent interface with seo_description field
 export interface PageContent {
@@ -197,4 +197,18 @@ export async function searchPosts(query: string, categorySlug?: string, authorSl
     }
     throw new Error('Failed to search posts')
   }
+}
+
+// Changed: Added subscribeToNewsletter function to create newsletter subscriber objects in Cosmic
+export async function subscribeToNewsletter(name: string, email: string): Promise<NewsletterSubscriber> {
+  const response = await cosmic.objects.insertOne({
+    title: name,
+    type: 'newsletter-subscribers',
+    metadata: {
+      name,
+      email,
+    },
+  })
+
+  return response.object as NewsletterSubscriber
 }

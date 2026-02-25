@@ -1,9 +1,25 @@
 import Link from 'next/link'
+import NewsletterForm from '@/components/NewsletterForm'
+
+// Changed: Added newsletter subscription form to the footer
 
 export default function Footer() {
   return (
     <footer className="bg-ocean-950 text-ocean-200">
       <div className="mx-auto max-w-6xl px-6 py-16">
+        {/* Changed: Added newsletter section above footer columns */}
+        <div className="mb-12 pb-12 border-b border-ocean-800">
+          <div className="max-w-xl">
+            <h3 className="text-lg font-semibold text-white mb-2">
+              📬 Subscribe to Swell Journal
+            </h3>
+            <p className="text-sm text-ocean-300 mb-4 leading-relaxed">
+              Get the latest surf stories and tips delivered to your inbox.
+            </p>
+            <NewsletterForm />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           {/* Brand */}
           <div>
