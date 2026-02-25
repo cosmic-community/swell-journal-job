@@ -2,10 +2,14 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import SearchBar from '@/components/SearchBar'
+
+// Changed: Added Search link to navigation and integrated SearchBar component
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' }, // Changed: Added About link
+  { href: '/about', label: 'About' },
+  { href: '/search', label: 'Search' },
   { href: '/#categories', label: 'Categories' },
   { href: '/#authors', label: 'Authors' },
 ]
@@ -24,18 +28,21 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-8 text-sm font-medium text-ocean-700">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className="hover:text-ocean-500 transition-colors duration-200"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex items-center gap-6">
+          <ul className="flex items-center gap-8 text-sm font-medium text-ocean-700">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="hover:text-ocean-500 transition-colors duration-200"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <SearchBar variant="header" />
+        </div>
 
         {/* Hamburger button – mobile only */}
         <button
@@ -66,7 +73,7 @@ export default function Header() {
       {/* Mobile menu panel */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          mobileOpen ? 'max-h-60 border-t border-ocean-100' : 'max-h-0'
+          mobileOpen ? 'max-h-72 border-t border-ocean-100' : 'max-h-0'
         }`}
       >
         <ul className="flex flex-col gap-1 px-6 py-4 text-sm font-medium text-ocean-700">
@@ -81,6 +88,24 @@ export default function Header() {
               </Link>
             </li>
           ))}
+          {/* Mobile search link */}
+          <li>
+            <Link
+              href="/search"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-2 rounded-lg px-3 py-2.5 hover:bg-ocean-100 hover:text-ocean-500 transition-colors duration-200"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              Search Articles
+            </Link>
+          </li>
         </ul>
       </div>
     </header>

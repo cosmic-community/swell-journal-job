@@ -167,3 +167,34 @@ export async function getPageBySlug(slug: string): Promise<PageContent | null> {
     throw new Error('Failed to fetch page')
   }
 }
+
+// Changed: Added searchPosts function for full-text search with optional category/author filters
+export async function searchPosts(query: string, categorySlug?: string, authorSlug?: string): Promise<Post[]> {
+  try {
+    const allPosts = await getPosts()
+
+    const lowerQuery = query.toLowerCase().trim()
+
+    const filtered = allPosts.filter((post) => {
+      // Text search: match against title and content
+      const titleMatch = post.title.toLowerCase().includes(lowerQuery)
+      const contentMatch = post.metadata?.content?.toLowerCase().includes(lowerQuery) ?? false
+      const textMatch = lowerQuery === '' || titleMatch || contentMatch
+
+      // Category filter
+      const categoryMatch = !categorySlug || post.metadata?.category?.slug === categorySlug
+
+      // Author filter
+      const authorMatch = !authorSlug || post.metadata?.author?.slug === authorSlug
+
+      return textMatch && categoryMatch && authorMatch
+    })
+
+    return filtered
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to search posts')
+  }
+}
