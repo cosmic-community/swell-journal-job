@@ -3,6 +3,8 @@ import PostCard from '@/components/PostCard'
 import AuthorCard from '@/components/AuthorCard'
 import Link from 'next/link'
 
+// Changed: Added search CTA section to the homepage
+
 export default async function HomePage() {
   const [posts, categories, authors] = await Promise.all([
     getPosts(),
@@ -34,6 +36,21 @@ export default async function HomePage() {
             ocean. Discover new breaks, refine your technique, and find your
             next adventure.
           </p>
+          {/* Changed: Added search CTA link */}
+          <Link
+            href="/search"
+            className="mt-8 inline-flex items-center gap-3 rounded-xl bg-white/10 px-6 py-3 text-sm font-medium text-white backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-200"
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            Search all articles
+          </Link>
         </div>
       </section>
 
